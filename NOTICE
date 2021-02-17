@@ -1,0 +1,7 @@
+AudioDeviceManager is distributed under the GNU GPLv3 license. However, it
+makes use of libraries distributed under different licenses.
+
+The NAudio library <https://github.com/naudio/NAudio/> by Mark Heath
+<https://markheath.net/> is installed as a NuGet package, and it is
+distributed under the MIT license. More information can be found at the
+library's webpage <https://github.com/naudio/NAudio/>.
