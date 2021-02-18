@@ -133,7 +133,7 @@
     <value>This program automatically raises and lowers the volume so that the output's peaks remain between 75% and 100% of the wanted volume.
 The maximum output on the selected device will be checked at every tick: if the peak is less than 75% of the wanted volume, the program will raise the device's volume to allow you to hear it clearly. If, however, the resulting peak is above the wanted volume (because the device's volume had been raised), the program will lower the volume.
 Ticks before rasing/lowering allow to introduce a delay between the too-low/too-high peak and the actual volume change (tip: don't wait to lower the volume, but wait before raising it again).
-Max volume prevents the program for setting a too-high device volume because of very low sound output. Sound output under a certain threshold (2%) is considered silence: in this case the volume is set to the wanted value.</value>
+Max volume prevents the program for setting a too-high device volume because of very low sound output. Sound output under a certain threshold (2%) is considered silence: in this case the volume is kept at its current value.</value>
   </data>
   <metadata name="label4.GenerateMember" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>False</value>

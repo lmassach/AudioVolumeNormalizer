@@ -237,7 +237,7 @@ namespace AudioVolumeNormalizer {
             // 
             this.numLowerPatience.Location = new System.Drawing.Point(157, 72);
             this.numLowerPatience.Maximum = new decimal(new int[] {
-            1000,
+            900,
             0,
             0,
             0});

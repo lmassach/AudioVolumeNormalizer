@@ -116,7 +116,7 @@ namespace AudioVolumeNormalizer {
                     currentDevice = null;
                 } else if (value.FriendlyName != currentDevice?.FriendlyName) {
                     currentDevice = value;
-                    currentPeaks = new RingBuffer();
+                    currentPeaks = new RingBuffer((int)numRaisePatience.Maximum);
                     timer.Start();
                 }
                 SetStatus();
@@ -152,7 +152,7 @@ namespace AudioVolumeNormalizer {
                 if (lPeak * vol > wVol)
                     newvol = wVol / lPeak;
                 else if (rPeak * vol < 0.75f * wVol)
-                    newvol = rPeak > 0.02f ? Math.Min(wVol * 0.75f / rPeak, wVol / lPeak) : wVol;
+                    newvol = rPeak > 0.02f ? Math.Min(wVol * 0.75f / rPeak, wVol / lPeak) : vol;
                 if (newvol != vol)
                     vol = Math.Min(mVol, newvol);
             } catch (Exception ex) {
