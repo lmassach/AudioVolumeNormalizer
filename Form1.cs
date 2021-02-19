@@ -134,25 +134,24 @@ namespace AudioVolumeNormalizer {
             get { return currentDevice.AudioEndpointVolume.MasterVolumeLevelScalar; }
             set { currentDevice.AudioEndpointVolume.MasterVolumeLevelScalar = value; }
         }
-        private float wVol { get { return (float)numWantedVolume.Value / 100.0f; } }
-        private float mVol { get { return (float)numMaxVolume.Value / 100.0f; } }
-        private float lPeak { 
-            get { return currentPeaks.GetMinOfLastN((int)numLowerPatience.Value); }
-        }
-        private float rPeak { 
-            get { return currentPeaks.GetMaxOfLastN((int)numRaisePatience.Value); } 
-        }
+        private float wVol => (float)numWantedVolume.Value / 100.0f;
+        private float mVol => (float)numMaxVolume.Value / 100.0f;
+        private float lPeak => currentPeaks.GetMinOfLastN((int)numLowerPatience.Value);
+        private float rPeak => currentPeaks.GetMaxOfLastN((int)numRaisePatience.Value);
+        private TimeSpan raiseDelay => new TimeSpan((long)(numTickDuration.Value * numRaisePatience.Value * TimeSpan.TicksPerMillisecond));
 
-        //private DateTime lastTick = DateTime.Now;
+        private DateTime lastLower = DateTime.Now;
 
         private void timer_Tick(object sender, EventArgs e) {
             try {
                 currentPeaks.PushBack(currentDevice.AudioMeterInformation.MasterPeakValue);
                 float newvol = vol;
-                if (lPeak * vol > wVol)
+                if (lPeak * vol > wVol) {
                     newvol = wVol / lPeak;
-                else if (rPeak * vol < 0.75f * wVol)
+                    lastLower = DateTime.Now;
+                } else if (DateTime.Now - lastLower > raiseDelay && rPeak * vol < 0.75f * wVol) {
                     newvol = rPeak > 0.02f ? Math.Min(wVol * 0.75f / rPeak, wVol / lPeak) : vol;
+                }
                 if (newvol != vol)
                     vol = Math.Min(mVol, newvol);
             } catch (Exception ex) {
